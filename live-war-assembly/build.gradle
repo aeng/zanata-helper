@@ -1,0 +1,58 @@
+description = 'Jetty server module - Creates a UberJar consisting of all classes needed to start Jetty'
+group 'org.zanata.helper.livewar'
+
+configurations {
+//    compile {
+//        description = 'compile classpath'
+//        transitive = false
+//    }
+    merge
+}
+
+//dependencies {
+//    compile project(':server')
+//    compile project(':jetty-server')
+//    compile project(':server-bootstrap')
+//}
+
+//task zipFrontend(dependsOn: 'buildFrontend',  type: Zip) {
+//    from ('dist/')
+//}
+//
+//
+//configurations {
+//    zip
+//}
+//artifacts {
+//    zip zipFrontend
+//}
+
+// ## From server's build.gradle:
+//apply plugin: 'war'
+//configurations {
+//    server
+//}
+//artifacts {
+//    serer war
+//}
+
+// ## From merger's build.gradle:
+configurations {
+    merge
+}
+dependencies {
+    merge project(path: ':server')
+    merge project(':jetty-server')
+    merge project(':server-bootstrap')
+}
+task merge(dependsOn: configurations.merge, type: War) {
+    from {
+        configurations.merge.collect {
+            zipTree(it)
+        }
+    }
+    destinationDir(buildDir)
+}
+
+
+//mainClassName = "org.zanata.helper.bootstrap.JettyBootstrap"

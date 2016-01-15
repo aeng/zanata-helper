@@ -1,0 +1,13 @@
+
+description = 'Bootstrap runner'
+group 'org.zanata.helper.bootstrap'
+
+jar {
+    manifest {
+        attributes(
+            "Implementation-Title": "Gradle",
+            "Implementation-Version": version,
+            'mainClass': 'org.zanata.helper.bootstrap.JettyBootstrap'
+        )
+    }
+}

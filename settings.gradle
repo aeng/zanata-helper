@@ -3,8 +3,14 @@ include 'common'
 include ':zanata-cli-plugin'
 include 'git-plugin'
 include ':server'
+include ':server-bootstrap'
+include ':jetty-server'
+include ':live-war-assembly'
 
 project(':common').projectDir = "$rootDir/common" as File
 project(':zanata-cli-plugin').projectDir = "$rootDir/zanata-cli-plugin" as File
 project(':git-plugin').projectDir = "$rootDir/git-plugin" as File
 project(':server').projectDir = "$rootDir/server" as File
+project(':server-bootstrap').projectDir = "$rootDir/server-bootstrap" as File
+project(':jetty-server').projectDir = "$rootDir/jetty-server" as File
+project(':live-war-assembly').projectDir = "$rootDir/live-war-assembly" as File
