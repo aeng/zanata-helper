@@ -5,6 +5,15 @@ plugins {
 
 apply plugin: 'war'
 
+configurations {
+    deployableWar
+}
+
+artifacts {
+    deployableWar war
+}
+
+
 // get rid of the goddamn transitive dependency from zanata-client-command (old version of javassist)
 configurations.compile.exclude group: 'javassist', module: 'javassist'
 
@@ -76,3 +85,14 @@ processResources {
         fieldsNeedEncryption: 'apiKey'
     ])
 }
+
+task explodedWar(type: Copy) {
+    into "$buildDir/exploded"
+    with war
+}
+
+task bringInJars(type: Copy) {
+    from project
+}
+
+war.dependsOn explodedWar

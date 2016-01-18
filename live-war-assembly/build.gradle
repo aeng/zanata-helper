@@ -6,7 +6,9 @@ configurations {
 //        description = 'compile classpath'
 //        transitive = false
 //    }
-    merge
+    merge {
+        transitive = false
+    }
 }
 
 //dependencies {
@@ -37,22 +39,32 @@ configurations {
 //}
 
 // ## From merger's build.gradle:
-configurations {
-    merge
-}
+
 dependencies {
-    merge project(path: ':server')
+//    merge project(':server')
     merge project(':jetty-server')
     merge project(':server-bootstrap')
 }
+
+task explodedDist(type: Copy) {
+    into "$buildDir/explodedDist"
+    project(':server') {
+        from 'explodedWar'
+    }
+}
+
 task merge(dependsOn: configurations.merge, type: War) {
-    from {
+    from(explodedDist, project(':jetty-server'), project(':server-bootstrap')) {
         configurations.merge.collect {
             zipTree(it)
         }
     }
     destinationDir(buildDir)
 }
+
+
+
+
 
 
 //mainClassName = "org.zanata.helper.bootstrap.JettyBootstrap"
