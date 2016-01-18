@@ -6,6 +6,14 @@ plugins {
 description = 'Jetty server module - Creates a UberJar consisting of all classes needed to start Jetty'
 group 'org.zanata.helper.jetty'
 
+configurations {
+    'shadow'
+}
+//
+//artifacts {
+//    shadow shadowJar.outputJar
+//}
+
 def jettyVersion = '9.3.5.v20151012'
 
 dependencies {
@@ -19,6 +27,12 @@ shadowJar {
     mergeServiceFiles()
     exclude 'META-INF/MANIFEST.MF'
     exclude 'META-INF/VERSION.txt'
+
+    artifacts {
+        shadow(tasks.shadowJar.archivePath) {
+            builtBy shadowJar
+        }
+    }
 }
 
 // gradle shadowJar //shadow the runtime configuration with project code into ./build/libs/
